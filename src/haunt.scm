@@ -66,7 +66,7 @@
          #:collection-template
          (lambda (site title posts prefix)
 		(define (post-uri site post)
-		  (string-append (or prefix "")
+		  (string-append  (or prefix "") "/"
 			(site-post-slug site post) ".html"))
 	   `((h2 ,title)
 	     (ul (@ (class "post-collection"))
@@ -82,10 +82,7 @@
 
 (define (home-page site posts)
   (define body
-    `((h2 "")
-      (p "My name is Russell Bryan. I'm a student currently studying mathematics
-	 at the University of Oklahoma. This is a site documenting some of the
-	 projects I've worked on and the ideas that I've had.")))
+    `(,(post-sxml (car (last-pair posts)))))
   (make-page "index.html"
 	     (with-layout blog-theme site "Home" body)
 	     sxml->html))
@@ -115,7 +112,7 @@
       '((author . "Russell Bryan")
         (email  . "russell.e.bryan@gmail.com"))
       #:readers (list sxml-reader)
-      #:builders (list (blog #:theme blog-theme #:prefix "/posts/" #:collections post-collections)
+      #:builders (list (blog #:theme blog-theme #:prefix "/posts" #:collections post-collections)
 		       home-page
 		       (static-directory "assets")
                        (static-directory "css")))
