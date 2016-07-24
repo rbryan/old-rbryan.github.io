@@ -1,0 +1,93 @@
+% LaTeX file for resume 
+% This file uses the resume document class (res.cls)
+
+\documentclass[margin]{res} 
+% the margin option causes section titles to appear to the left of body text 
+\textwidth=7in % increase textwidth to get smaller right margin
+%\usepackage{helvetica} % uses helvetica postscript font (download helvetica.sty)
+%\usepackage{newcent}   % uses new century schoolbook postscript font 
+
+\begin{document} 
+ 
+\name{Russell Bryan\\[12pt]} % the \\[12pt] adds a blank line after name
+ 
+\address{{\bf Permanent Address} \\ 1704 Mill St. \\ Conway, AR 72034 }
+\address{{\bf Contact Information} \\ (501) 208-6274 \\ bryanr@ou.edu }
+
+ 
+\begin{resume} 
+ 
+\section{Objective} 
+ Seeking internship allowing me to gain experience in the fields of mathematics and computer science.
+
+\section{Education} 
+Arkansas School for Mathematics, Sciences and the Arts, Hot Springs, AR\hfill	6/2014 \\
+Concentrations in Physics, Mathematics, and Computer Science 
+
+University of Oklahoma, Norman, OK \hfill 9/2014 - Present\\
+Pursuing an undergraduate degree in Mathematics GPA 3.68 overall
+
+ 
+
+\section{Experience}
+{\bf Software Engineering Intern,} National Instruments, \\ Austin, TX\hfill Summer 2015, 2016
+\begin{itemize} \itemsep -2pt  % reduce space between items
+\item Wrote driver features making a product more suitable for use in physics experimentation at a major national laboratory
+\item Currently implementing new driver features for SMUs.
+\end{itemize}
+
+{\bf Student Research,} FPGA Based Detection of Coincident Photons, \\ University of Oklahoma\hfill  Fall 2014 - Spring 2015
+\begin{itemize} \itemsep -2pt %reduce space between items
+\item Wrote VHDL that doubled the number of channels on an existing detection circuit design
+\end{itemize}
+
+{\bf Student Research,} Brownian Motion as a Source of Entropy for the Generation of Random Numbers, ASMSA\hfill  Fall 2013 - Spring 2014
+\begin{itemize} \itemsep -2pt %reduce space between items
+\item Wrote C program to track particles of milkfat suspended in water and tested data gathered as a source of entropy
+\end{itemize}
+ 
+%
+%\section{Leadership   Activities} 
+%
+%{\bf Software Lead,} OU IEEE Robotics Team, Norman, OK\hfill  Fall 2014 - Spring 2015
+
+\section{Personal\\Projects}
+
+{\bf Vole Lisp:} Language written from scratch in Java.\hfill  Spring 2016
+\begin{itemize} \itemsep -2pt %reduce space between items
+\item Wrote a simple interpreted LISP 1 with first class functions, tail-call optimization, bignums, and basic macros.
+\end{itemize}
+
+{\bf Bitcoin Solver:} Using a SAT solver to solve Bitcoin\hfill  Ongoing
+\begin{itemize} \itemsep -2pt %reduce space between items
+\item Currently writing a program in scheme that attempts to translate the Bitcoin proof of work function into a boolean equation
+\end{itemize}
+
+{\bf RPL Programming Language:} a simple programming language.\hfill  Fall 2015
+\begin{itemize} \itemsep -2pt %reduce space between items
+\item Wrote a stack based reverse polish lisp in C.
+\end{itemize}
+
+
+
+\section{Academic \\ Honors} 
+Intel Science and Engineering Fair Finalist 2014\\
+Association for Computing Machinery 4th Place Award ISEF 2014\\
+Yale Science and Engineering Association Science Fair Award 2013 \\
+National Merit Finalist \\
+ 
+
+% Tabulate Computer Skills; p{3in} defines paragraph 3 inches wide
+\section{Skills}
+   \begin{tabular}{l p{3in}}
+	   \underline{Programming Languages:} & C/C++, Bash, Scheme (Lisp), Java, Python, Perl, R  \\
+
+	   \underline{Software:} &  GNU Bison (Yacc), Flex (Lex), Linux/Unix, Windows, GNU Toolchain and build process,
+	   		Git, Perforce, Labview \\
+ \end{tabular}
+
+\end{resume} 
+\end{document} 
+
+
+
