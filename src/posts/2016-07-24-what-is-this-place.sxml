@@ -9,11 +9,11 @@
   (content
    ((p "Welcome to my blog!, or projects page, or what have you.
 	This is mostly intended to be a place for me to describe and document
-	the project that I occasionally do, although I'm sure there will be posts about
+	the projects that I occasionally do, although I'm sure there will be posts about
 	other things. There will (hopefully) be a rapid flurry of posts when this site
 	first comes up as I have a whole host of older projects in need of documenting.")
 
-    (p "This site is a static website built using "
+    (p "This is a static website built using "
 	(a (@ (href "https://haunt.dthompson.us"))
            "Haunt")
 	", a static site generator written in "
