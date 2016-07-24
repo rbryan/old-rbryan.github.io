@@ -82,7 +82,7 @@
 
 (define (home-page site posts)
   (define body
-    `(,(post-sxml (car (last-pair posts)))))
+    `(,(post-sxml (car (last-pair (posts/reverse-chronological posts))))))
   (make-page "index.html"
 	     (with-layout blog-theme site "Home" body)
 	     sxml->html))
