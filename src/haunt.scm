@@ -71,7 +71,7 @@
 	   `((h2 ,title)
 	     (ul (@ (class "post-collection"))
 	       ,@(map (lambda (post) 
-			  `(li (@ (class "post"))
+			  `(li (@ (class "post-listing"))
 			       (h3
 				 (a (@ (href ,(post-uri site post)))
 				,(post-ref post 'title))
