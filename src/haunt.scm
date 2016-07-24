@@ -66,7 +66,7 @@
          #:collection-template
          (lambda (site title posts prefix)
 		(define (post-uri site post)
-		  (string-append "/" (or prefix "")
+		  (string-append (or prefix "")
 			(site-post-slug site post) ".html"))
 	   `((h2 ,title)
 	     (ul (@ (class "post-collection"))
@@ -115,7 +115,7 @@
       '((author . "Russell Bryan")
         (email  . "russell.e.bryan@gmail.com"))
       #:readers (list sxml-reader)
-      #:builders (list (blog #:theme blog-theme #:prefix "/posts" #:collections post-collections)
+      #:builders (list (blog #:theme blog-theme #:prefix "/posts/" #:collections post-collections)
 		       home-page
 		       (static-directory "assets")
                        (static-directory "css")))
