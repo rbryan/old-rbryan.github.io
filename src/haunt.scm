@@ -96,11 +96,7 @@
 	 (lambda (a b)
 	   (let ((a (post-ref a 'project))
 		 (b (post-ref b 'project)))
-	       (if (> 0
-	         (string-compare (symbol->string a)
-			         (symbol->string b)))
-	         #t
-	         #f))))))
+	         (string<=? a b))))))
 
 (define post-collections
   `(("Posts" "posts.html" ,posts/reverse-chronological)
