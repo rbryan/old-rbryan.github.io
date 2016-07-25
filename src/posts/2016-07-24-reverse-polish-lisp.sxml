@@ -88,7 +88,7 @@
 		if then else statement. It pops three code snippets from the stack.
 		The last code snippet it pops is then run. If the top of the stack
 		evaluates to true then it runs the second code snippet popped. Otherwise
-		it will evaluate the third snippet popped. This code will duplicate
+		it will evaluate the first snippet popped. This code will duplicate
 		the top value of the stack and compare it to " (code "2") ". If
 		greater than two it will recursively call "(code "fact-work")",
 		otherwise, it will multiply one last time and leave the result on
