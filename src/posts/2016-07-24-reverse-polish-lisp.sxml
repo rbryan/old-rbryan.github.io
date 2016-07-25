@@ -1,0 +1,113 @@
+;;; -*- scheme -*-
+
+(use-modules  (haunt utils)
+	      (ice-9 rdelim))
+
+`((title . "Reverse Polish Lisp: A first foray into language design")
+  (date . ,(string->date* "2016-07-24 15:00"))
+  (tags "project" "program" "language" "c" "flex" "bison" "yacc" "lexx")
+  (summary . "My first toy language.")
+  (project . "rplisp")
+  (content
+   (
+
+	(h3 "Background")
+
+	(p 	"During the summer between my senior year of high school and my freshman year of college
+		the strangest desire to write my own programming language overcame me. This would be the
+		first of many times I'd feel this need. The idea first came to me while trying to figure
+		out how to write programs for my HP-50G graphing calculator.") 
+
+	(p	"HP calculators have, for
+		many years, been the only calculator to perpetuate a strange method of input. Rather than
+		having the user input equations and expressions in the standard \"algebraic\" way that is
+		common to most calculators, the user has the option of entering expressions in Reverse
+		Polish Notation. For example, rather than entering: " (code "1 + 2") "to calculate a sum,
+		the user might enter: " (code "+ 1 2") "This makes for a much more efficient, and, once you
+		practice it for a while, natural feeling method of input.")
+
+	(p	"Like most sufficiently fancy calculators, they also have a scripting language analagous
+		to TI-BASIC on Texas Instruments calculators. Keeping consistency with their method of input,
+		HP calculators use a language called RPL or Reverse Polish Lisp. I wanted to be able to
+		develop and test RPL programs for my calculator on my computer, so I decided I was going
+		to write my own interpreter. I quickly realized that this wouldn't be the easiest thing
+		in the world to do because RPL consists entirely of "
+		(a (@ (href "https://en.wikipedia.org/wiki/Threaded_code"))
+			"threaded") " code with each function on the calculator being represented by a
+		unique instruction. Because the code is stored and edited in this format I would have
+		to write a custom editor or translator along with my compiler if I wanted it to be of 
+		much use to me at all. In hindsight that doesn't sound so bad, but at the time it was a
+		secondary goal. If I completed my language I knew I could translate it later.")
+
+	(h3 "The Language")
+
+	(p	"This being my first experience with writing a programming language,
+		I didn't want to have to futz about too much with writing my own
+		parser so I used flex and bison to generate a parser and lexer for me. As it turns out,
+		this ended up being almost as much work as writing the parser by hand. I'm sure that
+		they make the process of writing parsers much easier once you're experienced using them,
+		but it wasn't the best choice at the time. In following projects I was more careful to
+		consider the learning curve of the tools I used.")
+
+	(p	"The language is threaded and stack based, much like RPL. There are two stacks. the
+		user stack and the program stack. The user stack is where user data is pushed on entry.
+		For example, suppose the user enters " (code "2") " the top value on the user stack will
+		be the value " (code "2")". The program stack is where program instructions are stored. When a token
+		is lexed it is turned into an instruction and pushed to the program stack. The instruction
+		at the base of the stack and works its way forward. Both of these stacks are stored in one
+		large chunk of memory. The user stack is built up from the bottom and the instruction stack
+		is built down from the top.")
+
+	(p	"I don't remember the exact reason that I quit developing the language, but I seem to remember
+		thinking that there were some, seemingly at the time, very difficult problems to face if I
+		wanted to do more with the language. I'm confident that with what I now know I could improve
+		the language more, but at this point I've moved on to other things. I think the next thing needed
+		in the language would be user input and output functions. Now I don't think any of these would be too
+		difficult, but I may have forgotten the reasons I didn't do them then.")
+
+	(h3 "Example Program")
+		
+	(p	"Here is an example program in rplisp to compute the factorial of 10."
+		(pre ,(call-with-input-file "assets/factorial.rpl" read-string)))
+
+	(p	"Let's break this down. The first thing you need to know is that
+		parentheses mean nothing. Chevrons (<<|>>), on the other hand, are
+		a bit more important."
+		(pre "<< 1 swap fact-work >> fact def")
+		"The portion surrounded by chevrons is a snippet of code. Because
+		It's in chevrons the whole bit of code is compiled and pushed to
+		the stack as one instruction. " (code fact)" is a symbol. Because it doesn't
+		yet have a definition it's pushed to the stack. " (code def) " is the define
+		function. It associates the symbol fact with the code snippet previously
+		pushed to the stack. So, now we have a fact function. In actuality it's
+		a wrapper function for " (code fact-work) "."
+		
+		(pre "<< << dup 2 gt >> << dup 1 - fact-work * >> << * >> ifte >>")
+		
+		"This is the meat of the factorial function. " (code ifte) " is an
+		if then else statement. It pops three code snippets from the stack.
+		The last code snippet it pops is then run. If the top of the stack
+		evaluates to true then it runs the second code snippet popped. Otherwise
+		it will evaluate the third snippet popped. This code will duplicate
+		the top value of the stack and compare it to " (code "2") ". If
+		greater than two it will recursively call "(code "fact-work")",
+		otherwise, it will multiply one last time and leave the result on
+		the stack."
+
+		(pre "10 fact print")
+
+		"Finally, we call " (code "fact") " on the value " (code "10") " and we print the result.") 
+
+						
+
+    
+	(p "Give it a try:")
+
+	(pre
+  		"git clone "
+		(a (@ (href "https://github.com/rbryan/rplisp"))
+			"https://github.com/rbryan/rplisp\n")
+ 		"cd rplisp\n"
+ 		"make\n"
+		"./rplisp < factorial.rpl")
+    )))

@@ -1,0 +1,69 @@
+<!DOCTYPE html><head><meta charset="utf-8" /><title>Reverse Polish Lisp: A first foray into language design - rbryan</title><link rel="stylesheet" href="/css/reset.css" /><link rel="stylesheet" href="/css/main.css" /></head><body><header class="navbar"><div class="container"><ul><li><a href="/">home</a></li><li><a href="/posts/projects.html">projects</a></li><li><a href="/posts/posts.html">posts</a></li><li><a href="/assets/resume.pdf">resume</a></li><li><a href="https://github.com/rbryan">git</a></li></ul></div></header><div class="container"><h2>Reverse Polish Lisp: A first foray into language design</h2><h3>by Russell Bryan - Sun 24 July 2016</h3><div><h3>Background</h3><p>During the summer between my senior year of high school and my freshman year of college
+		the strangest desire to write my own programming language overcame me. This would be the
+		first of many times I&apos;d feel this need. The idea first came to me while trying to figure
+		out how to write programs for my HP-50G graphing calculator.</p><p>HP calculators have, for
+		many years, been the only calculator to perpetuate a strange method of input. Rather than
+		having the user input equations and expressions in the standard &quot;algebraic&quot; way that is
+		common to most calculators, the user has the option of entering expressions in Reverse
+		Polish Notation. For example, rather than entering: <code>1 + 2</code>to calculate a sum,
+		the user might enter: <code>+ 1 2</code>This makes for a much more efficient, and, once you
+		practice it for a while, natural feeling method of input.</p><p>Like most sufficiently fancy calculators, they also have a scripting language analagous
+		to TI-BASIC on Texas Instruments calculators. Keeping consistency with their method of input,
+		HP calculators use a language called RPL or Reverse Polish Lisp. I wanted to be able to
+		develop and test RPL programs for my calculator on my computer, so I decided I was going
+		to write my own interpreter. I quickly realized that this wouldn&apos;t be the easiest thing
+		in the world to do because RPL consists entirely of <a href="https://en.wikipedia.org/wiki/Threaded_code">threaded</a> code with each function on the calculator being represented by a
+		unique instruction. Because the code is stored and edited in this format I would have
+		to write a custom editor or translator along with my compiler if I wanted it to be of 
+		much use to me at all. In hindsight that doesn&apos;t sound so bad, but at the time it was a
+		secondary goal. If I completed my language I knew I could translate it later.</p><h3>The Language</h3><p>This being my first experience with writing a programming language,
+		I didn&apos;t want to have to futz about too much with writing my own
+		parser so I used flex and bison to generate a parser and lexer for me. As it turns out,
+		this ended up being almost as much work as writing the parser by hand. I&apos;m sure that
+		they make the process of writing parsers much easier once you&apos;re experienced using them,
+		but it wasn&apos;t the best choice at the time. In following projects I was more careful to
+		consider the learning curve of the tools I used.</p><p>The language is threaded and stack based, much like RPL. There are two stacks. the
+		user stack and the program stack. The user stack is where user data is pushed on entry.
+		For example, suppose the user enters <code>2</code> the top value on the user stack will
+		be the value <code>2</code>. The program stack is where program instructions are stored. When a token
+		is lexed it is turned into an instruction and pushed to the program stack. The instruction
+		at the base of the stack and works its way forward. Both of these stacks are stored in one
+		large chunk of memory. The user stack is built up from the bottom and the instruction stack
+		is built down from the top.</p><p>I don&apos;t remember the exact reason that I quit developing the language, but I seem to remember
+		thinking that there were some, seemingly at the time, very difficult problems to face if I
+		wanted to do more with the language. I&apos;m confident that with what I now know I could improve
+		the language more, but at this point I&apos;ve moved on to other things. I think the next thing needed
+		in the language would be user input and output functions. Now I don&apos;t think any of these would be too
+		difficult, but I may have forgotten the reasons I didn&apos;t do them then.</p><h3>Example Program</h3><p>Here is an example program in rplisp to compute the factorial of 10.<pre>(	
+	( &lt;&lt; 1 swap fact-work &gt;&gt; fact def )
+
+	( &lt;&lt; 	
+		&lt;&lt; dup 2 gt &gt;&gt;
+		&lt;&lt; dup 1 - fact-work * &gt;&gt;
+		&lt;&lt; * &gt;&gt;
+		ifte
+	&gt;&gt; 
+	fact-work def )
+
+	10 fact print 
+)
+</pre></p><p>Let&apos;s break this down. The first thing you need to know is that
+		parentheses mean nothing. Chevrons (&lt;&lt;|&gt;&gt;), on the other hand, are
+		a bit more important.<pre>&lt;&lt; 1 swap fact-work &gt;&gt; fact def</pre>The portion surrounded by chevrons is a snippet of code. Because
+		It&apos;s in chevrons the whole bit of code is compiled and pushed to
+		the stack as one instruction. <code>fact</code> is a symbol. Because it doesn&apos;t
+		yet have a definition it&apos;s pushed to the stack. <code>def</code> is the define
+		function. It associates the symbol fact with the code snippet previously
+		pushed to the stack. So, now we have a fact function. In actuality it&apos;s
+		a wrapper function for <code>fact-work</code>.<pre>&lt;&lt; &lt;&lt; dup 2 gt &gt;&gt; &lt;&lt; dup 1 - fact-work * &gt;&gt; &lt;&lt; * &gt;&gt; ifte &gt;&gt;</pre>This is the meat of the factorial function. <code>ifte</code> is an
+		if then else statement. It pops three code snippets from the stack.
+		The last code snippet it pops is then run. If the top of the stack
+		evaluates to true then it runs the second code snippet popped. Otherwise
+		it will evaluate the third snippet popped. This code will duplicate
+		the top value of the stack and compare it to <code>2</code>. If
+		greater than two it will recursively call <code>fact-work</code>,
+		otherwise, it will multiply one last time and leave the result on
+		the stack.<pre>10 fact print</pre>Finally, we call <code>fact</code> on the value <code>10</code> and we print the result.</p><p>Give it a try:</p><pre>git clone <a href="https://github.com/rbryan/rplisp">https://github.com/rbryan/rplisp
+</a>cd rplisp
+make
+./rplisp &lt; factorial.rpl</pre></div><footer class="text-center"><p><small>Copyright 2016 Russell Bryan</small></p></footer></div></body>
