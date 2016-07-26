@@ -3,10 +3,10 @@
 (use-modules  (haunt utils)
 	      (ice-9 rdelim))
 
-`((title . "How I Wrote a Program to do My Homework For Me")
+`((title . "A Program to Solve and Format Homework Problems")
   (date . ,(string->date* "2016-07-25 18:15"))
   (tags "project" "blog" "automation" "tools")
-  (summary . "How I wrote a program that, given a problem description, solved my homework problems.")
+  (summary . "A program that, given a problem description, solves homework problems and shows its work.")
   (project . "homework-solver")
   (content
    (
@@ -30,7 +30,7 @@
 		reduntant and time consuming to me to the point that I invested a significant
 		amount of my free time into writing a program that would produce it for me.")
 
-	(h3	"How I did it")
+	(h3	"How it Works")
 
 	(p	"The core of the program is "
 		(a (@ (href "https://en.wikipedia.org/wiki/Maxima_%28software%29")) "Maxima")
