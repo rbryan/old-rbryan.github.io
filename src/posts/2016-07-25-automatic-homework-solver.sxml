@@ -43,7 +43,9 @@
 	
 	(p	"The only things left to do once I figured that out were to set up a system to 
 		generate input for Maxima to work on, and to postprocess the output it produced
-		into the format that I wanted. Input was simple, the description for the problem
+		into the format that I wanted. All of this was written in Guile scheme; this made
+		it easy to create a domain specific language to generate input for Maxima and 
+		process the output. Input was simple, the description for the problem
 		was a set of functions that transformed problem inputs into input for Maxima.
 		The output was less trivial. The Latex that Maxima outputs is less than ideal and
 		in many cases and I found myself repeatedly adding special cases to the post
