@@ -13,7 +13,7 @@
 	(h3	"Background")
 	(p	"
 		Senior year of highschool I was introduced to a simple card game called
-		" (a (href "http://nrich.maths.org/1179") "Femto") " by a good friend.
+		" (a (@ (href "http://nrich.maths.org/1179")) "Femto") " by a good friend.
 		The game is so simple, that with a little practice you can even play it in your
 		head with no cards at all. An interesting property arises as a result of this
 		simplicity. The game is simple enough that a person can reason about the possible
