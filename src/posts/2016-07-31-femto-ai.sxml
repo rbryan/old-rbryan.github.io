@@ -1,0 +1,71 @@
+;;; -*- scheme -*-
+
+(use-modules  (haunt utils)
+	      (ice-9 rdelim))
+
+`((title . "Fembot: A naive AI for the game of femto")
+  (date . ,(string->date* "2016-07-31 15:40"))
+  (tags "project" "AI" "learning" "lua" )
+  (summary . "An AI for a simple card game")
+  (project . "fembot")
+  (content
+   (
+	(h3	"Background")
+	(p	"
+		Senior year of highschool I was introduced to a simple card game called
+		" (a (href "http://nrich.maths.org/1179") "Femto") " by a good friend.
+		The game is so simple, that with a little practice you can even play it in your
+		head with no cards at all. An interesting property arises as a result of this
+		simplicity. The game is simple enough that a person can reason about the possible
+		outcomes of a decision fairly effectively and in a reasonable period of time.
+		However, it's not so simple that this is easy to
+		to without a pen and paper though which makes it an excellent game of thought.
+		")
+
+	(h3	"Game/Rules")
+	(p	"
+		There are eight cards in the deck: 2,3,4,5,6,7,8, and 10. Each player is dealt
+		four cards. Each round both players play a card face down. The cards are
+		revealed and the higher card wins, unless the lower card is less than half of
+		the value of the higher card. The player of the winning card chooses one of
+		the two cards and keeps it in front of him. The other player places the
+		remaining card in his hand. When one player has no cards left the game is over.
+		The player with the greatest total value of cards in front of him at the end of
+		the game is the winner. 
+		")
+		
+	(h3	"How it Works")
+
+	(p	"
+		This is a very simple AI. It was designed mostly so that
+		I had something to play against and only needed to be good enough to beat me.
+		Ideally an AI for this game would use something like Minimax/Alpha-Beta pruning.
+		Even better would be working out the game theory and \"solving\" the game. Currently
+		the AI just looks at every possible outcome that the game can take and chooses the one
+		that has the most branches that win. It's sort of like Monte-Carlo/Rollouts, but
+		there's nothing random about it. It's simple enough to try everything, so it does.
+
+		The AI also has code for training and playing against a neural network using lua-fann.
+		There are two networks. One for choosing which card to play and one for choosing which
+		card to take if the round is won. The neural networks didn't pan out and I was too busy
+		playing against my simple AI to fiddle with them to get them working. Perhaps if I come
+		back to this project I'll fix up the neural-nets or implement a better algorithm.
+		")
+	
+	(h3	"Give it a Try")
+
+	(p	"You'll need lua-fann and lua5.2 or luajit to make this work."
+	  (pre
+  		"git clone "
+		(a (@ (href "https://github.com/rbryan/fembot"))
+			"https://github.com/rbryan/fembot\n")
+ 		"cd fembot\n"
+		"lua fembot.lua"))
+
+)))
+
+
+
+
+
+
