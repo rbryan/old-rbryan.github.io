@@ -7,7 +7,7 @@
 `((title . "guile-lips: Scheme as a generic macro language")
   (date . ,(string->date* "2016-07-31 23:20"))
   (tags "project" "guile" "scheme" "language" )
-  (summary . "An AI for a simple card game")
+  (summary . "Embedding scheme in text for writing macros.")
   (project . "lips")
   (content
    (
