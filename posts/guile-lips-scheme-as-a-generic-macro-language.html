@@ -1,0 +1,70 @@
+<!DOCTYPE html><head><meta charset="utf-8" /><title>guile-lips: Scheme as a generic macro language - rbryan</title><link rel="stylesheet" href="/css/reset.css" /><link rel="stylesheet" href="/css/main.css" /></head><body><header class="navbar"><div class="container"><ul><li><a href="/">home</a></li><li><a href="/posts/projects.html">projects</a></li><li><a href="/posts/posts.html">posts</a></li><li><a href="/assets/resume.pdf">resume</a></li><li><a href="https://github.com/rbryan">git</a></li></ul></div></header><div class="container"><h2>guile-lips: Scheme as a generic macro language</h2><h3>by Russell Bryan - Sun 31 July 2016</h3><div><p>This blog thing is finally picking up! I would consider this to be
+		one of my more polished projects. There are still some warts on it
+		that I don&apos;t particularly like, but I&apos;ve done my best to make it as
+		clean and modular as possible. This project was inspired by another
+		similar project that you can find <a href="https://github.com/zc1036/lips">here</a> 
+		so if you prefer common lisp to scheme go check it out.
+		The idea is pretty much the same, but (I think) my version is cleaner and
+		more modular. My version is also written in guile rather than common
+		lisp.</p><h3>By Example</h3><p>The idea here is simple. You write whatever sort of text file as you
+		normally would, except scheme expressions following a <code>~</code> will
+		be evaluated and printed. If you want to write a &apos;<code>~</code>&apos;, just write
+		&quot;<code>~~</code>&quot;. It&apos;s that simple. Lets jump straight into an example.</p><p>One of the most useful uses for a macro system is to add features to a language
+		to fit it to your uses better. As an example, lets fix one of the things that
+		annoys me most about Java, import statements. They always end up being verbose and
+		repetitive.</p><pre>
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.awt.Color;</pre><p>Look at that. Yes, the repetition is kind of mesmerizing; it does look fairly tidy once
+		you&apos;re finished typing it all out. I write enough as it is though. I don&apos;t want to have
+		to type out <code>java.util.*</code> half a dozen times every time I make a new file. Let&apos;s
+		clean this up a bit. I think it should look more like this:</p><pre>
+~(java-import &apos;((java
+			(util
+				HashMap
+				HashSet
+				Map
+				Random
+				Set
+				UUID
+				(concurrent
+					ExecutorService
+					Executors
+					Callable
+					Future))
+			(awt
+				Color))))</pre><p>Much better! My eye&apos;s were starting to get sore looking at all those jagged semi-colons! So,
+		How do we make this happen? It&apos;s as simple as writing a function that takes a tree of symbols
+		and prints appropriate import statements:</p><pre>
+(define (java-import specification)
+		(letrec ((recurse  ;;future Russell thinks he should have used a named loop here
+			   (lambda (spec-string spec-list)
+			     (for-each (lambda (spec)
+					 (if (list? spec)
+					   (recurse (string-append
+						      spec-string
+						      (symbol-&gt;string (car spec)) &quot;.&quot;)
+						    (cdr spec))
+					   (begin
+					     (display (string-append
+							&quot;import &quot;
+							spec-string
+							(symbol-&gt;string spec) &quot;;&quot;))
+					     (newline))))
+				       spec-list))))
+		  (recurse &quot;&quot; specification)))</pre><p>How easy was that!!? You can use this in a few ways. You can make a macro file
+		and include it in your project loading it as you would any scheme code. You can
+		put it in your <code>lipsrc.scm</code> file in <code>$HOME/.config/lips/lipsrc.scm</code> or
+		you can do what I did and make a module and put it in <code>$HOME/.config/lips/modules</code>.
+		lips will look here by default when using a standard configuration.</p><pre>git clone <a href="https://github.com/rbryan/guile-lips">https://github.com/rbryan/guile-lips
+</a>cd guile-lips
+./install.sh   #If you don&apos;t read this first you&apos;re a fool.
+lips &lt; test.txt</pre></div><footer class="text-center"><p><small>Copyright 2016 Russell Bryan</small></p></footer></div></body>
